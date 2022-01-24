@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--配置目标类-->
+    <bean id="target" class="com.cd.aop.Target"/>
+
+    <!--配置切面类-->
+    <bean id="myAspect" class="com.cd.aop.MyAspect"></bean>
+    <aop:config>
+        <!--引用myAspect的Bean为切面对象-->
+        <aop:aspect ref="myAspect">
+        <!--配置Target的method方法执行时要进行myAspect的before方法前置增强-->
+        <aop:before method="before" pointcut="execution(public void com.cd.aop.Target.eat())"></aop:before>
+        <aop:after method="after" pointcut="execution(public void com.cd.aop.Target.eat())"></aop:after>
+        </aop:aspect>
+        </aop:config>
+
+<context:component-scan base-package="com.cd.aop_anno"></context:component-scan>
+
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+</beans>
